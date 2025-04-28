@@ -1,0 +1,39 @@
+# docker-compose.yml
+
+version: '3.9'
+
+services:
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile.fastapi
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - redis
+
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile.fastapi
+    command: celery -A fastapi_server.tasks worker --loglevel=info --concurrency=4
+    env_file:
+      - .env
+    depends_on:
+      - redis
+
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile.bot
+    ports:
+      - "3000:3000"
+    depends_on:
+      - fastapi
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
