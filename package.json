@@ -1,0 +1,20 @@
+{
+  "name": "whatsapp-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.cjs",
+  "scripts": {
+    "start": "node index.cjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.7.16",
+    "axios": "^1.8.4",
+    "body-parser": "^2.2.0",
+    "express": "^5.1.0",
+    "ioredis": "^5.6.1",
+    "qrcode-terminal": "^0.12.0"
+  }
+}
