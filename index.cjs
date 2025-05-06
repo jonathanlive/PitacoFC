@@ -14,6 +14,8 @@ const {
 } = require('@whiskeysockets/baileys');
 const qrcode = require('qrcode-terminal');
 const FASTAPI_URL = process.env.FASTAPI_URL || 'http://localhost:8000';
+const QRCode = require('qrcode'); // ← adicione isso no topo com os outros imports
+let qrCodeData = null; // ← para armazenar o QR gerado
 
 const fs = require('fs');
 const authPath = './auth_info_multi';
@@ -206,16 +208,19 @@ async function startSock() {
   const sock = makeWASocket({
     version,
     auth: state,
-    printQRInTerminal: true,
+    printQRInTerminal: false, // ← Desativa o terminal quebrado
     browser: ['MeuBot', 'Chrome', '1.0.0'],
-    defaultQueryTimeoutMs: 620_000,
-    msgRetryCounterMap: {},
-    shouldIgnoreJid: () => false,
     emitOwnEvents: true,
-    getMessage: async (key) => ({ conversation: "⚠️ Mensagem não encontrada para reenvio." })
+    getMessage: async () => ({ conversation: "⚠️ Mensagem não encontrada para reenvio." })
   });
 
-  sock.ev.on('connection.update', ({ connection, lastDisconnect }) => {
+  sock.ev.on('connection.update', async ({ connection, lastDisconnect, qr }) => {
+    if (qr) {
+      qrCodeData = qr; // ← guarda o QR atual para exibir na rota /qrcode
+      const domain = process.env.RAILWAY_PUBLIC_DOMAIN || `http://localhost:${process.env.PORT || 3000}`;
+      console.log(`📸 QR Code gerado! Escaneie aqui no navegador: ${domain}/qrcode`);
+    }
+
     if (connection === 'close') {
       const shouldReconnect = lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut;
       console.log('❌ Conexão encerrada.', { shouldReconnect });
@@ -283,6 +288,23 @@ app.post('/responder', async (req, res) => {
     res.status(500).send('Erro interno');
   }
 });
+
+// 🖼️ Nova rota para exibir o QR Code no navegador
+app.get('/qrcode', async (req, res) => {
+  if (!qrCodeData) {
+    return res.status(404).send('QR Code ainda não gerado. Tente novamente em instantes.');
+  }
+
+  try {
+    const qrImageBuffer = await QRCode.toBuffer(qrCodeData, { type: 'png', width: 300 });
+    res.set('Content-Type', 'image/png');
+    res.send(qrImageBuffer);
+  } catch (err) {
+    console.error('Erro ao gerar QR Code:', err.message);
+    res.status(500).send('Erro ao gerar QR Code');
+  }
+});
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
