@@ -147,9 +147,9 @@ class BrasileiraoAgent():
         return Crew(
             agents=self.agents, # Automatically created by the @agent decorator
             tasks=self.tasks, # Automatically created by the @task decorator
-            manager_llm="gpt-4o",  # Specify which LLM the manager should use
+            manager_llm="gpt-4.1-mini",  # Specify which LLM the manager should use
             process=Process.hierarchical,  
             planning=True, 
             verbose=True,
-            memory=True
+            name="Crew_PitacoFC"
         )

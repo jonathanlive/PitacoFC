@@ -1,4 +1,5 @@
 import json
+import os
 import re
 import unicodedata
 from selenium.webdriver.chrome.options import Options
@@ -125,8 +126,16 @@ class TeamOverallTool(BaseTool):
         options.add_argument('--disable-dev-shm-usage')
         options.add_argument('--disable-blink-features=AutomationControlled')
         options.add_argument('--window-size=1920,1080')
+        options.add_argument('--single-process')
         options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/122.0.0.0 Safari/537.36')
-        service = Service(ChromeDriverManager().install())
+        # Detecta se está rodando em container Linux
+        if os.path.exists("/usr/bin/chromium"):
+            options.binary_location = "/usr/bin/chromium"
+            service = Service("/usr/bin/chromedriver")
+        else:
+            from webdriver_manager.chrome import ChromeDriverManager
+            service = Service(ChromeDriverManager().install())
+
         driver = webdriver.Chrome(service=service, options=options)
 
         try:
