@@ -8,7 +8,7 @@ WORKDIR /app
 # Copia os arquivos do bot
 COPY package*.json ./
 COPY index.cjs ./
-COPY auth_info_multi/ auth_info_multi/
+#COPY auth_info_multi/ auth_info_multi/
 
 # Instala dependências
 RUN npm install

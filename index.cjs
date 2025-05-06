@@ -14,6 +14,13 @@ const {
 } = require('@whiskeysockets/baileys');
 const qrcode = require('qrcode-terminal');
 
+const fs = require('fs');
+const authPath = './auth_info_multi';
+
+if (!fs.existsSync(authPath)) {
+  fs.mkdirSync(authPath, { recursive: true });
+}
+
 // 🎯 Nova mensagem especial de boas-vindas
 const MENSAGEM_APRESENTACAO = `⚡ Salve, craque! Eu sou o PitacoFC, seu parceiro de resenha e análises boleiras! ⚽🔥
 
