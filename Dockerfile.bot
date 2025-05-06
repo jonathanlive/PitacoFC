@@ -14,7 +14,7 @@ COPY index.cjs ./
 RUN npm install
 
 # Exponha a porta para possíveis webhooks (não obrigatório)
-EXPOSE 3000
+EXPOSE 8080
 
 # Comando para iniciar o bot
 CMD ["node", "index.cjs"]
