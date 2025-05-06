@@ -217,7 +217,7 @@ async function startSock() {
   sock.ev.on('connection.update', async ({ connection, lastDisconnect, qr }) => {
     if (qr) {
       qrCodeData = qr; // ← guarda o QR atual para exibir na rota /qrcode
-      const domain = process.env.RAILWAY_PUBLIC_DOMAIN || `http://localhost:${process.env.PORT || 3000}`;
+      const domain = process.env.RAILWAY_PUBLIC_DOMAIN || `http://localhost:${process.env.PORT || 8080}`;
       console.log(`📸 QR Code gerado! Escaneie aqui no navegador: ${domain}/qrcode`);
     }
 

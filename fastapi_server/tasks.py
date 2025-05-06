@@ -4,7 +4,7 @@ from fastapi_server.brasileirao_connector import executar_crew
 import requests
 import os
 
-BOT_URL = os.getenv("BOT_URL", "http://localhost:3000")  # Ajuste a porta onde seu bot rodar
+BOT_URL = os.getenv("BOT_URL", "http://localhost:8080")  # Ajuste a porta onde seu bot rodar
 
 @celery_app.task
 def processar_pergunta_task(pergunta: str, sender: str):
