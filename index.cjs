@@ -13,6 +13,7 @@ const {
   fetchLatestBaileysVersion
 } = require('@whiskeysockets/baileys');
 const qrcode = require('qrcode-terminal');
+const FASTAPI_URL = process.env.FASTAPI_URL || 'http://localhost:8000';
 
 const fs = require('fs');
 const authPath = './auth_info_multi';
@@ -62,7 +63,7 @@ async function verificarIntencao(mensagem, sender) {
       historico
     };
 
-    const resposta = await axios.post('http://127.0.0.1:8000/intencao', payload);
+    const resposta = await axios.post(`${FASTAPI_URL}/intencao`, payload);
     return resposta.data.intencao;
 
   } catch (err) {
@@ -116,7 +117,7 @@ async function processarFilaDeMensagens(sock, sender) {
       if (intencao === 'futebol_geral') {
         try {
           const respostaIA = await axios.post(
-            'http://127.0.0.1:8000/futebol_geral',
+            `${FASTAPI_URL}/futebol_geral`,
             { pergunta: texto, sender: sender },
             { timeout: 30_000 }
           );
@@ -154,7 +155,7 @@ async function processarFilaDeMensagens(sock, sender) {
       if (intencao === 'noticia') {
         try {
           const respostaIA = await axios.post(
-            'http://127.0.0.1:8000/futebol_geral',
+            `${FASTAPI_URL}/futebol_geral`,
             { pergunta: texto, sender: sender },
             { timeout: 30_000 }
           );
@@ -179,7 +180,7 @@ async function processarFilaDeMensagens(sock, sender) {
       await sock.sendMessage(sender, { text: MENSAGENS.analisando });
 
       await axios.post(
-        'http://127.0.0.1:8000/perguntar',
+        `${FASTAPI_URL}/perguntar`,
         { pergunta: texto, sender: sender },
         { timeout: 20_000 }
       ).catch((err) => {
