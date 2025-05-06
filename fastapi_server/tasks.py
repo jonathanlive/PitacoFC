@@ -8,17 +8,22 @@ BOT_URL = os.getenv("BOT_URL", "http://localhost:8080")  # Ajuste a porta onde s
 
 @celery_app.task
 def processar_pergunta_task(pergunta: str, sender: str):
-    resposta = executar_crew(pergunta,sender)
+    print(f"[🧠 Pergunta recebida] '{pergunta}' de {sender}")
+
+    resposta = executar_crew(pergunta, sender)
+    print(f"[✅ Resposta gerada] {resposta[:200]}...")  # Trunca pra evitar poluir os logs
+
+    payload = {
+        "sender": sender,
+        "resposta": resposta
+    }
 
     try:
-        # Envia a resposta final para o bot
-        payload = {
-            "sender": sender,
-            "resposta": resposta
-        }
-        requests.post(f"{BOT_URL}/responder", json=payload, timeout=10)
+        print(f"[📡 Enviando para BOT_URL: {BOT_URL}/responder] Payload: {payload}")
+        response = requests.post(f"{BOT_URL}/responder", json=payload, timeout=10)
+        print(f"[✅ RESPOSTA HTTP] Status: {response.status_code} | Body: {response.text}")
     except Exception as e:
-        print(f"Erro ao enviar resposta para o bot: {str(e)}")
+        print(f"[❌ ERRO AO ENVIAR RESPOSTA PARA O BOT] {str(e)}")
 
     return "Mensagem enviada"
 
