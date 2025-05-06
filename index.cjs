@@ -4,7 +4,7 @@ global.crypto = crypto;
 const axios = require('axios');
 const express = require('express');
 const Redis = require('ioredis');
-const redis = new Redis();
+const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
 const bodyParser = require('body-parser');
 const {
   default: makeWASocket,
