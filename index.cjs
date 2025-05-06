@@ -262,29 +262,37 @@ const app = express();
 app.use(bodyParser.json());
 
 app.post('/responder', async (req, res) => {
+  console.log('📨 [POST /responder] Requisição recebida:', JSON.stringify(req.body, null, 2));
+
   try {
     const { sender, resposta } = req.body;
+
     if (!sender || !resposta) {
+      console.warn('⚠️ [POST /responder] Dados inválidos recebidos:', req.body);
       return res.status(400).send('Dados inválidos');
     }
 
     if (!sockGlobal) {
+      console.error('❌ [POST /responder] socketGlobal está undefined. WhatsApp ainda não conectado?');
       return res.status(500).send('Socket WhatsApp não conectado');
     }
 
+    console.log(`🚀 [POST /responder] Enviando mensagem para ${sender}...`);
     await sockGlobal.sendMessage(sender, { text: resposta });
+    console.log(`✅ [POST /responder] Mensagem enviada com sucesso para ${sender}`);
 
-    // ✅ Agora sim, libera o usuário para novas perguntas
+    // Libera o usuário para novas perguntas
     processandoUsuario[sender] = false;
 
-    // Após liberar, processa a fila novamente, caso tenha ficado mensagens pendentes
-    if (filasDeMensagens[sender] && filasDeMensagens[sender].length > 0) {
+    // Verifica se há fila pendente
+    if (filasDeMensagens[sender]?.length > 0) {
+      console.log(`🔄 [POST /responder] Processando fila pendente para ${sender}...`);
       processarFilaDeMensagens(sockGlobal, sender);
     }
 
     res.send('Mensagem enviada');
   } catch (error) {
-    console.error('Erro ao enviar resposta:', error.message);
+    console.error('🔥 [POST /responder] Erro ao enviar resposta:', error.stack || error.message);
     res.status(500).send('Erro interno');
   }
 });
@@ -305,6 +313,9 @@ app.get('/qrcode', async (req, res) => {
   }
 });
 
+app.get('/', (req, res) => {
+  res.send('✅ Pitaco FC está rodando!');
+});
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
