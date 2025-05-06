@@ -9,7 +9,7 @@ WORKDIR /app
 COPY brasileirao_agent/ brasileirao_agent/
 COPY fastapi_server/ fastapi_server/
 COPY requirements.txt .
-COPY .env .
+#COPY .env .
 
 # Instala dependências
 RUN pip install --no-cache-dir -r requirements.txt

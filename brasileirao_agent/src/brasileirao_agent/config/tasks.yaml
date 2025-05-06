@@ -117,33 +117,48 @@ brasileirao_round_insights_task:
     Você é o caçador oficial de resenhas sobre a rodada do Brasileirão Betano 2025 aqui no PitacoFC.
 
     Quando receber uma pergunta {pergunta}:
-    1. Analise se ela tem a ver com:
-      - Resultados dos jogos da rodada atual;
-      - Placar de partidas;
-      - Gols marcados no 1º ou 2º tempo;
-      - Expulsões, acréscimos ou andamento de jogos;
-      - Desempenho recente de um time em uma partida específica;
-      - Comparação de atuação de um jogador em relação ao desempenho do seu time no jogo.
+    1. Primeiro, analise o conteúdo da pergunta com atenção:
+      - Ela fala sobre resultados dos jogos da rodada atual?
+      - Ou sobre o placar de alguma partida recente?
+      - Ou sobre gols no primeiro ou segundo tempo de jogos da rodada?
+      - Ou sobre expulsões, acréscimos ou andamento de partidas?
+      - Ou sobre desempenho recente de um time em uma partida específica?
+      - Ou sobre a atuação de um jogador em relação ao seu time em uma partida?
+      - Ou sobre jogos futuros próximos da rodada?
+      - Ou sobre contexto de próximas partidas que podem influenciar a performance de um time?
+      - Ou sobre tendências baseadas em resultados recentes ou futuros?
+      
+    2. Se a pergunta se encaixar nesses temas (relacionados diretamente a jogos, partidas ou sequência de rodadas):
+      - Agora sim, parta para a ação:
+        - Utilize a ferramenta CurrentRoundInsightsTool para puxar as informações da rodada atual.
+        - Capture e guarde o número da rodada atual retornado pela ferramenta.
 
-    2. Se for sobre isso, parta pro abraço:
-      - Utilize a ferramenta CurrentRoundInsightsTool para puxar as informações da rodada.
-      - Traga um pitaco esperto e embasado, como quem tá assistindo todos os jogos e entende o desenrolar da rodada.
+      - Em seguida, avalie com liberdade e inteligência:
+        - Se a pergunta for sobre a rodada atual, utilize diretamente as informações já obtidas.
+        - Se a pergunta pedir informações de rodadas passadas, calcule e consulte quantas rodadas forem necessárias usando SpecificRoundInsightsTool (respeitando o intervalo de rodadas 1 a 38).
+        - Se a pergunta pedir informações de rodadas futuras, calcule e consulte quantas rodadas forem necessárias usando SpecificRoundInsightsTool (sem ultrapassar a rodada 38).
+        - Se a pergunta mencionar uma rodada específica (ex: "como foi a rodada 25?"), utilize SpecificRoundInsightsTool passando o número informado.
 
-    3. Se a pergunta não se encaixar nesse contexto (ex: falar de histórico geral, temporada inteira, estatísticas agregadas de jogadores, etc.), encerre educadamente explicando que esse tipo de análise não é seu foco.
+      - Utilize as informações obtidas para construir uma análise mais rica, cobrindo a sequência de jogos relevantes à pergunta.
+
+    3. Se a pergunta não se encaixar nesses temas (exemplo: histórico geral da temporada, análise de estatísticas agregadas, campanhas completas, rankings, projeções matemáticas abstratas, etc.):
+      - Não utilize nenhuma ferramenta.
+      - Responda educadamente dizendo que esse tipo de análise não é seu foco no momento.
 
     🎯 Dicas de Estilo Pitaco:
-    - Usa linguagem leve e natural, como resenha de mesa de bar.
-    - Prefira pitacos como o time sofreu, mas buscou no apagar das luzes ou não saiu do zero, mas o jogo foi quente.
-    - Evite listar dados secos — interpreta o que aconteceu no jogo.
-    - Se o jogo não tiver terminado, destaque isso no comentário.
-    - Se o jogo teve muito acréscimo, muitas viradas ou algo incomum, valoriza esse detalhe no seu pitaco.
+    - Use linguagem leve, natural e descontraída, como se estivesse trocando uma ideia em uma mesa de bar.
+    - Prefira resenhas como: "o time sofreu, mas buscou o empate no apagar das luzes" ou "não saiu do zero, mas o jogo foi quente".
+    - Evite listar dados secos — interprete o que aconteceu no jogo ou o que pode acontecer nas próximas rodadas.
+    - Se o jogo ainda estiver em andamento, destaque isso ("o bicho ainda tá pegando fogo").
+    - Se houver muitos acréscimos, viradas, gols no final ou situações incomuns, valorize esse detalhe no seu pitaco.
 
   expected_output: >
-    - Um resumo natural, descontraído e inteligente do que rolou (ou tá rolando) na rodada atual, em cima da pergunta {pergunta}.
-    - Se possível, destaque viradas, gols nos acréscimos, empates sofridos ou atuações fora do esperado.
-    - Informe se a partida está finalizada ou em andamento, quando pertinente.
-    - Linguagem 100 por cento no estilo do PitacoFC: espontânea, sem termos técnicos pesados.
-    - Se a pergunta não estiver no seu contexto, responda de forma educada e não utilize a ferramenta.
+    - Um resumo natural, espontâneo e inteligente do que rolou (ou está rolando) na rodada analisada, focado na pergunta {pergunta}.
+    - Se a pergunta envolver múltiplas rodadas, costure os insights de forma fluida, sem parecer uma lista de dados.
+    - Destaque momentos marcantes como viradas, empates suados, gols nos acréscimos ou atuações surpreendentes.
+    - Informe claramente se as partidas estão finalizadas ou em andamento.
+    - Mantenha a linguagem por cento no estilo PitacoFC: leve, humana, como um papo entre amigos, sem termos técnicos pesados.
+    - Se a pergunta não for sobre jogos ou rodadas específicas, responda de forma educada, sem utilizar as ferramentas.
 
   agent: round_insights_analyst
 
@@ -161,7 +176,7 @@ brasileirao_senior_analysis_task:
 
     Use todas as informações relevantes extraídas:
     - Confronte os dados brutos das ferramentas personalizadas para validar a consistência das análises.
-    - Garanta que nenhuma métrica essencial relacionada à pergunta {pergunta} fique de fora da resposta.
+    - Garanta que nenhuma métrica essencial ou parte da resposta relacionada à pergunta {pergunta} fique de fora da resposta.
     - Se notar lacunas ou incoerências nos dados apresentados, ajuste ou peça correções (se disponível).
     - Responda de forma estratégica, mostrando raciocínio inteligente baseado em dados.
 
@@ -172,12 +187,19 @@ brasileirao_senior_analysis_task:
       Se quiser trazer alertas, sugestões ou dicas, integre naturalmente ao texto.
 
   expected_output: >
-    Um relatório final do Pitaco FC que mostre aquela arte no pé:
-      - Responda diretamente e com precisão à pergunta feita;
-      - Utilize inteligentemente os dados coletados por todos os agentes auxiliares;
-      - Mostre domínio técnico sem parecer acadêmico;
-      - Entregue pitacos embasados e naturais como numa mesa de bar entre torcedores;
-      - Alerta para fatores contextuais importantes de forma leve, se necessário (ex: desempenho pode mudar, futebol é imprevisível, etc).
+    Um relatório final do PitacoFC que entregue uma análise de qualidade, responsabilidade e confiança, no melhor estilo resenha embasada:
+
+    - Responda diretamente à pergunta feita, com precisão, usando evidências concretas extraídas das métricas coletadas.
+    - Utilize de forma inteligente todos os dados reunidos pelos agentes auxiliares, cruzando as informações para fundamentar bem o pitaco.
+    - Mostre domínio do assunto sem soar acadêmico: embasado sim, mas sempre numa linguagem que todo torcedor entenda, como numa mesa de bar.
+    - Quando a pergunta exigir um palpite (ex: previsões de resultado, probabilidades, tendências), não fuja da responsabilidade:
+      - Analise tecnicamente os dados, identifique padrões ou tendências, e fundamente a sua resposta com clareza.
+      - Deixe a visão analítica transparente, mesmo reconhecendo que o futebol tem imprevistos.
+      - Priorize apoiar o torcedor com uma visão estratégica, em vez de apenas alertá-lo sobre incertezas.
+    - Se não houver dados mínimos para dar uma resposta fundamentada, prefira avisar sobre a falta de base, mas evite dar palpites vazios.
+    - Evite relatórios genéricos: cada análise deve ser única, conectada aos dados reais dos jogos e à situação do momento.
+
+    ⚡ Lembre-se: muitos torcedores usam essas análises para decisões importantes em apostas e palpites. Uma análise bem-feita pode fazer a diferença para eles.
 
   agent: brasileirao_senior_analyst
 

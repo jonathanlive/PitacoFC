@@ -4,6 +4,7 @@ from brasileirao_agent.tools.current_round_insight_tool import CurrentRoundInsig
 from brasileirao_agent.tools.jogos_tool import JogosTool
 from brasileirao_agent.tools.player_overall_tool import PlayerOverallTool
 from brasileirao_agent.tools.playerstats_tool import PlayersStatsTool
+from brasileirao_agent.tools.round_insights_tool import RoundInsightsTool
 from brasileirao_agent.tools.tabela_tool import TabelaTool
 from brasileirao_agent.tools.team_overall_tool import TeamOverallTool
 
@@ -123,7 +124,8 @@ class BrasileiraoAgent():
     def brasileirao_round_insights_task(self) -> Task:
         return Task(
             config=self.tasks_config['brasileirao_round_insights_task'],
-            tools=[CurrentRoundInsightsTool()]
+            tools=[CurrentRoundInsightsTool(),
+                   RoundInsightsTool()]
         )
     
     @task

@@ -7,8 +7,8 @@ services:
       dockerfile: Dockerfile.fastapi
     ports:
       - "8000:8000"
-    env_file:
-      - .env
+    # env_file:
+    #   - .env
     depends_on:
       - redis
 
@@ -17,8 +17,8 @@ services:
       context: .
       dockerfile: Dockerfile.fastapi
     command: celery -A fastapi_server.tasks worker --loglevel=info --concurrency=4
-    env_file:
-      - .env
+    # env_file:
+    #   - .env
     depends_on:
       - redis
 
@@ -28,8 +28,8 @@ services:
       dockerfile: Dockerfile.bot
     ports:
       - "3000:3000"
-    env_file:
-      - .env
+    # env_file:
+    #   - .env
     depends_on:
       - fastapi
 
