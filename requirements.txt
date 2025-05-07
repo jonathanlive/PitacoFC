@@ -2,6 +2,7 @@ fastapi
 uvicorn
 selenium
 webdriver-manager
+databricks-sdk
 python-dotenv>=1.0.0
 celery
 redis

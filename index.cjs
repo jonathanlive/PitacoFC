@@ -132,7 +132,7 @@ async function processarFilaDeMensagens(sock, sender) {
           });
       
         } catch (err) {
-          console.error('[❌ ERRO AO CONSULTAR /futebol_geral]:', err.message);
+          console.error(`[❌ ERRO AO CONSULTAR ${FASTAPI_URL}/futebol_geral]:`, err.message);
           await sock.sendMessage(sender, { text: MENSAGENS.erro }).catch(console.error);
         }
       
@@ -157,7 +157,7 @@ async function processarFilaDeMensagens(sock, sender) {
       if (intencao === 'noticia') {
         try {
           const respostaIA = await axios.post(
-            `${FASTAPI_URL}/futebol_geral`,
+            `${FASTAPI_URL}/noticia`,
             { pergunta: texto, sender: sender },
             { timeout: 30_000 }
           );
@@ -170,7 +170,7 @@ async function processarFilaDeMensagens(sock, sender) {
           });
       
         } catch (err) {
-          console.error('[❌ ERRO AO CONSULTAR /futebol_geral para noticia]:', err.message);
+          console.error(`[❌ ERRO AO CONSULTAR ${FASTAPI_URL}/noticia]:`, err.message);
           await sock.sendMessage(sender, { text: MENSAGENS.erro }).catch(console.error);
         }
       

@@ -97,3 +97,43 @@ def responder_mensagem_geral(mensagem: str, sender: str) -> str:
     except Exception as e:
         print(f"[⚠️ ERRO AO RESPONDER GERAL]: {e}")
         return "⚠️ Deu erro ao tentar responder agora. Tente de novo mais tarde."
+
+def responder_noticia(mensagem: str, sender: str) -> str:
+    """
+    Responde perguntas de notícia (lesões, escalação, rumores, etc.)
+    usando Chat Completions + web_search embutido.
+    """
+    try:
+        # 1. Verifica se já existe thread para o usuário
+        thread_id = thread_manager.get_thread(sender)
+
+        # 2. Se não tiver, cria nova thread
+        if not thread_id:
+            thread = client.beta.threads.create()
+            thread_id = thread.id
+            thread_manager.register_thread(sender, thread_id)
+
+        # 3. Faz a chamada com o tool de busca habilitado
+        response = client.chat.completions.create(
+            model="gpt-4o-search-preview",
+            messages=[{"role": "user", "content": mensagem}],
+            web_search_options={          # opcional
+                "user_location": {
+                    "type": "approximate",
+                    "approximate": {
+                        "country": "BR"
+                    }
+                }
+            }
+        )
+
+        resposta = response.choices[0].message.content.strip()
+
+        # 4. Atualiza o histórico local
+        thread_manager.increment_message_count(sender)
+
+        return resposta
+
+    except Exception as e:
+        print(f"[⚠️ ERRO AO RESPONDER NOTÍCIA]: {e}")
+        return "⚠️ Deu erro ao buscar notícias agora. Tente de novo mais tarde."

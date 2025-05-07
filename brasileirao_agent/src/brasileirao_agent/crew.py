@@ -7,6 +7,7 @@ from brasileirao_agent.tools.playerstats_tool import PlayersStatsTool
 from brasileirao_agent.tools.round_insights_tool import RoundInsightsTool
 from brasileirao_agent.tools.tabela_tool import TabelaTool
 from brasileirao_agent.tools.team_overall_tool import TeamOverallTool
+from crewai_tools import WebsiteSearchTool
 
 # If you want to run a snippet of code before or after the crew starts,
 # you can use the @before_kickoff and @after_kickoff decorators
@@ -24,6 +25,14 @@ class BrasileiraoAgent():
 
     # If you would like to add tools to your agents, you can learn more about it here:
     # https://docs.crewai.com/concepts/agents#agent-tools
+    @agent
+    def news_analyst(self) -> Agent:
+        return Agent(
+            config=self.agents_config['news_analyst'],
+            verbose=True,
+            allow_delegation=True
+        )
+    
     @agent
     def tabela_analyst(self) -> Agent:
         return Agent(
@@ -83,6 +92,13 @@ class BrasileiraoAgent():
     # To learn more about structured task outputs,
     # task dependencies, and task callbacks, check out the documentation:
     # https://docs.crewai.com/concepts/tasks#overview-of-a-task
+    @task
+    def brasileirao_news_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['brasileirao_news_task'],
+            tools=[WebsiteSearchTool()]
+        )
+    
     @task
     def brasileirao_insights_task(self) -> Task:
         return Task(

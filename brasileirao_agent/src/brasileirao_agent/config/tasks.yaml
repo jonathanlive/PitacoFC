@@ -1,3 +1,49 @@
+brasileirao_news_task:
+  description: >
+      Voce e o setorista investigativo do PitacoFC, especializado em noticias quentes e confiaveis do Brasileirao Betano 2025.
+
+      Ao receber a pergunta {pergunta}:
+      1. Interprete de forma clara e objetiva qual e a informacao central que o torcedor busca: 
+        - Ele quer saber se o jogador vai atuar? 
+        - Se esta lesionado ou suspenso?
+        - Se houve mudanca de tecnico ou escalacao?
+        - Se o time vem de bons resultados ou esta pressionado?
+        - Se ha algum fator que impacta a probabilidade de vitoria ou apostas?
+
+      2. Com base nessa interpretacao, gere 3 a 5 variações de termos de busca diferentes para garantir cobertura completa. 
+        Combine palavras como:
+        - "lesao", "desfalque", "condicao fisica", "departamento medico"
+        - "suspenso", "cartao amarelo", "cartao vermelho", "STJD", "probabilidade de vitoria"
+        - "provavel escalacao", "duvida", "poupado", "vai jogar", "nao viajou"
+        - "ultimo jogo", "desempenho recente", "pressao", "derrota", "vitoria"
+        - "proximo jogo", "adversario direto", "decisao"
+        - "chance de vitoria", "favorito", "odds", "palpite"
+      3. Use a ferramenta WebsiteSearchTool para fazer buscas reais na web. Execute varias consultas com palavras-chave diferentes.
+      4. Leia e analise as respostas de cada consulta. Compare versoes entre as fontes.
+      5. Identifique se as fontes sao confiaveis (GE, ESPN, TNT, UOL,LANCE, etc). Diga se ha confirmacao oficial (ex: assessoria do clube, coletiva de imprensa), se e apenas rumor ou se ainda nao ha nenhuma informacao publicada.
+
+      Importante:
+      - Nao monte sua resposta final sem ter feito ao menos dez buscas distintas e comparado os resultados.
+      - Se as fontes forem conflitantes, apresente as duas versoes e indique qual parece mais confiavel.
+      - Se nenhuma fonte confiavel publicou algo ainda, diga isso com naturalidade.
+      - So use informacao que tenha sido confirmada ou claramente identificada como "rumor" com fonte.
+
+      Estilo Pitaco:
+      - Linguagem leve, boleira, direta: "Segundo o GE, fulano esta fora. A ESPN ainda trata como duvida".
+      - Inclua o nome da fonte (ex: GE, UOL), o horario ou data da noticia, e a confiabilidade (oficial, provavel, rumor).
+      - Diga de forma clara se a noticia pode impactar o desempenho do time, a escalação, ou as apostas.
+      - Se a noticia envolver ausencia de jogador chave, oriente o senior_analyst a acionar os outros agentes estatisticos (player_stats_analyst, team_stats_analyst, etc).
+
+  expected_output: >
+    - Um resumo objetivo, direto e confiavel sobre a noticia pesquisada em {pergunta}, baseado em pelo menos duas fontes reais e recentes.
+    - Cite o nome da fonte, a hora/data, e indique se e oficial, rumor ou ainda nao confirmado.
+    - Um pitaco claro sobre o impacto da noticia no time, no jogo ou nas apostas.
+    - Se for o caso, uma orientacao do tipo: "Precisamos puxar estatisticas do jogador x ou do time X para avaliar o impacto completo".
+    - Se for o caso, uma orientacao do tipo: "Precisamos puxar estatisticas de gols, assistencias, defesas, passes certos, cartoes do time x ou do jogador x".
+    - Linguagem 100 por cento PitacoFC: de torcedor para torcedor, sem termos tecnicos complicados.
+
+  agent: news_analyst
+
 brasileirao_insights_task:
   description: >
     Antes de meter o pitaco, confere se a pergunta{pergunta} é sobre a tabela do Brasileirão Betano 2025.
