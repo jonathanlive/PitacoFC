@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 from difflib import get_close_matches
 from typing import Type, Dict, List
 from pydantic import BaseModel, Field
-from crewai_tools import BaseTool
+from crewai.tools import BaseTool
 
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
