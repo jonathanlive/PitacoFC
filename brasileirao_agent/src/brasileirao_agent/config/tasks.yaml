@@ -74,7 +74,7 @@ brasileirao_club_insights_task:
     - Pitaco final sobre impacto em odds/tática/gestão.  
     - Se faltar dado essencial, admite sem rodeio.  
     - Gancho claro para acionar outros agentes (ex.: “chama o team_stats_analyst pra ver se essa defesa segura sem reforço”).  
-    - Linguagem 100 % PitacoFC: resenha leve, sem estatistiquês.
+    - Linguagem 100 por cento PitacoFC: resenha leve, sem estatistiquês.
 
   agent: club_insights_analyst  
 
