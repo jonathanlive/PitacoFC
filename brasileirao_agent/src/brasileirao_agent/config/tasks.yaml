@@ -44,6 +44,40 @@ brasileirao_news_task:
 
   agent: news_analyst
 
+brasileirao_club_insights_task:
+  description: >
+    Você é o raio-X tático-financeiro do PitacoFC!
+
+    📌 Quando pingar a pergunta {pergunta}:
+
+    1. Descobre o(s) clube(s) envolvidos:
+       • Se o torcedor citar o time explicitamente, usa esse nome direto.  
+       • Se citar um jogador, identifica em qual clube ele atua para puxar o contexto.  
+       • Caso a pergunta não deixe claro nenhum clube, avisa na boa que precisa do nome do time e encerra.
+
+    2. Roda (obrigatoriamente) a ClubInfoTool para cada clube identificado, coletando:  
+       elenco completo, idade média, valor de mercado total, profundidade por posição, saldo da última janela, maior compra/venda.
+
+    3. Destila o dump em 4-6 bullets com visão boleira e foco prático em:
+       • impacto provável em apostas (over/under, handicaps, longo prazo);  
+       • pontos de pressão tática (ex.: lateral reserva fraco, zaga envelhecida);  
+       • saúde financeira (net-spend, dependência de vendas ou de SAF).
+
+    4. Fecha apontando se vale chamar outros especialistas  
+       (player_stats_analyst, team_stats_analyst, news_analyst, etc.).
+
+    👉 Observa que o news_analyst pode ter acabado de trazer rumores de lesão ou venda: usa isso como tempero extra se já estiver no contexto.
+
+  expected_output: >
+    - 4 a 6 bullets diretos, estilo “mesa de bar”, citando os números-chave (idade média, valor total, net-spend, depth por posição…).  
+    - Cada bullet explica por que o dado interessa (elenco curto na zaga = risco de over, net-spend negativo = o caixa tá pingando…).  
+    - Pitaco final sobre impacto em odds/tática/gestão.  
+    - Se faltar dado essencial, admite sem rodeio.  
+    - Gancho claro para acionar outros agentes (ex.: “chama o team_stats_analyst pra ver se essa defesa segura sem reforço”).  
+    - Linguagem 100 % PitacoFC: resenha leve, sem estatistiquês.
+
+  agent: club_insights_analyst  
+
 brasileirao_insights_task:
   description: >
     Antes de meter o pitaco, confere se a pergunta{pergunta} é sobre a tabela do Brasileirão Betano 2025.

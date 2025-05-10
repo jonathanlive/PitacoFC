@@ -1,5 +1,6 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
+from brasileirao_agent.tools.club_info_tool import ClubInfoTool
 from brasileirao_agent.tools.current_round_insight_tool import CurrentRoundInsightsTool
 from brasileirao_agent.tools.jogos_tool import JogosTool
 from brasileirao_agent.tools.player_overall_tool import PlayerOverallTool
@@ -29,56 +30,56 @@ class BrasileiraoAgent():
     def news_analyst(self) -> Agent:
         return Agent(
             config=self.agents_config['news_analyst'],
-            verbose=True,
-            allow_delegation=True
+            verbose=True
+        )
+    
+    @agent
+    def club_insights_analyst(self) -> Agent:
+        return Agent(
+            config=self.agents_config['club_insights_analyst'],
+            verbose=True
         )
     
     @agent
     def tabela_analyst(self) -> Agent:
         return Agent(
             config=self.agents_config['tabela_analyst'],
-            verbose=True,
-            allow_delegation=True
+            verbose=True
         )
     
     @agent
     def tabela_performance_analyst(self) -> Agent:
         return Agent(
             config=self.agents_config['tabela_performance_analyst'],
-            verbose=True,
-            allow_delegation=True
+            verbose=True
         )
     
     @agent
     def team_stats_analyst(self) -> Agent:
         return Agent(
             config=self.agents_config['team_stats_analyst'],
-            verbose=True,
-            allow_delegation=True
+            verbose=True
         )
     
     @agent
     def player_stats_analyst(self) -> Agent:
         return Agent(
             config=self.agents_config['player_stats_analyst'],
-            verbose=True,
-            allow_delegation=True
+            verbose=True
         )
     
     @agent
     def player_overall_analyst(self) -> Agent:
         return Agent(
             config=self.agents_config['player_overall_analyst'],
-            verbose=True,
-            allow_delegation=True
+            verbose=True
         )
     
     @agent
     def round_insights_analyst(self) -> Agent:
         return Agent(
             config=self.agents_config['round_insights_analyst'],
-            verbose=True,
-            allow_delegation=True
+            verbose=True
         )
     
     @agent
@@ -100,6 +101,13 @@ class BrasileiraoAgent():
         )
     
     @task
+    def brasileirao_club_insights_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['brasileirao_club_insights_task'],
+            tools=[ClubInfoTool()]
+        )
+    
+    @task
     def brasileirao_insights_task(self) -> Task:
         return Task(
             config=self.tasks_config['brasileirao_insights_task'],
@@ -110,8 +118,7 @@ class BrasileiraoAgent():
     def brasileirao_team_performance_task(self) -> Task:
         return Task(
             config=self.tasks_config['brasileirao_team_performance_task'],
-            tools=[JogosTool()],
-            context=[self.brasileirao_insights_task()]
+            tools=[JogosTool()]
         )
     
     @task
@@ -132,8 +139,7 @@ class BrasileiraoAgent():
     def brasileirao_player_overall_task(self) -> Task:
         return Task(
             config=self.tasks_config['brasileirao_player_overall_task'],
-            tools=[PlayerOverallTool()],
-            context=[self.brasileirao_player_stats_task()]
+            tools=[PlayerOverallTool()]
         )
     
     @task
@@ -147,11 +153,7 @@ class BrasileiraoAgent():
     @task
     def brasileirao_senior_analysis_task(self) -> Task:
         return Task(
-            config=self.tasks_config['brasileirao_senior_analysis_task'],
-            context=[self.brasileirao_insights_task(),
-                     self.brasileirao_team_performance_task(),
-                     self.brasileirao_player_stats_task(),
-                     self.brasileirao_player_overall_task()]
+            config=self.tasks_config['brasileirao_senior_analysis_task']
         )
 
     @crew
@@ -164,6 +166,7 @@ class BrasileiraoAgent():
             agents=self.agents, # Automatically created by the @agent decorator
             tasks=self.tasks, # Automatically created by the @task decorator
             manager_llm="gpt-4.1-mini",  # Specify which LLM the manager should use
+            llm_manager=self.brasileirao_senior_analyst(), 
             process=Process.hierarchical,  
             planning=True, 
             verbose=True,
