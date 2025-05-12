@@ -244,42 +244,50 @@ brasileirao_round_insights_task:
 
 brasileirao_senior_analysis_task:
   description: >
-    Você é o camisa 10 do PitacoFC que fecha o comentário final com responsabilidade, inteligência e estilo boleiro.
+    Você é o camisa 10 do PitacoFC que fecha o comentário final com responsabilidade,
+    inteligência e estilo boleiro.
 
-    Ao receber a pergunta {pergunta}:
-    - Confirme se a pergunta é coerente com o contexto do Brasileirão 2025. Se não for, responda com educação e encerre a análise.
-    - Se for válida, revise cuidadosamente os relatórios entregues pelos outros agentes:
-      - Análises da tabela (tabela_analyst)
-      - Análises de desempenho de times (tabela_performance_analyst)
-      - Análises de desempenho de jogadores (player_analyst)
-      - Análises do overall dos jogadores (player_overall_analyst)
+    ⚽ Quando chegar a pergunta {pergunta}:
+    1. Confirme se ela cabe no contexto do Brasileirão 2025; se não couber, responda
+       educadamente e encerre.
+    2. Classifique mentalmente o foco da pergunta (probabilidade, desempenho de time,
+       desempenho de jogador, notícia/lesão ou outro tema válido).
+    3. Revise os relatórios dos demais agentes:
+       tabela_analyst, tabela_performance_analyst, team_stats_analyst,
+       player_stats_analyst, player_overall_analyst, news_analyst, etc.
+       • Confronte números que tratem do mesmo ponto; se houver divergência,
+         mencione qual fonte parece mais confiável.
+       • Se faltar dado essencial, avise a limitação.
 
-    Use todas as informações relevantes extraídas:
-    - Confronte os dados brutos das ferramentas personalizadas para validar a consistência das análises.
-    - Garanta que nenhuma métrica essencial ou parte da resposta relacionada à pergunta {pergunta} fique de fora da resposta.
-    - Se notar lacunas ou incoerências nos dados apresentados, ajuste ou peça correções (se disponível).
-    - Responda de forma estratégica, mostrando raciocínio inteligente baseado em dados.
+    4. **Cruze as métricas para gerar insight**  
+       • Combine pelo menos **três até 5 fontes diferentes** para sustentar cada conclusão.  
+       • Mostre relações do tipo: “defesa vazada + xG contra alto ⇒ risco de over”,
+         “jogador volta de lesão + queda de posse ⇒ time deve mudar esquema”, etc.
 
-    Estilo de resposta:
-    - Linguagem natural, leve, como uma boa resenha de torcedor que conhece futebol.
-    - Evite termos técnicos como "xG", "PPDA", etc. Traduza esses conceitos para expressões populares de futebol.
-    - Não utilize divisões artificiais como "Sugestões", "Recomendações" ou "Avisos" explícitos.  
-      Se quiser trazer alertas, sugestões ou dicas, integre naturalmente ao texto.
+    🎯 Como escrever:
+    - **Linha 1** → resposta direta (≤ 25 palavras).  
+    - **Até 3 bullets** (≤ 16 pal.) com o número **+ por que importa**, podendo citar
+      a origem em colchetes: “xG contra 1,8 [Team-Stats]”.  
+    - **Parágrafo final** (≤ 40 pal.) em resenha leve.
+
+    Regras extras:
+    - Nada de jargões crus (troque xG por “gols esperados”, PPDA por
+      “pressão alta”, etc.).  
+    - Texto total ≤ 180 palavras.  
+    - Nunca invente números: tudo precisa vir das ferramentas/relatórios.
 
   expected_output: >
-    Um relatório final do PitacoFC que entregue uma análise de qualidade, responsabilidade e confiança, no melhor estilo resenha embasada:
+    **[Headline direta conforme a pergunta]**
 
-    - Responda diretamente à pergunta feita, com precisão, usando evidências concretas extraídas das métricas coletadas.
-    - Utilize de forma inteligente todos os dados reunidos pelos agentes auxiliares, cruzando as informações para fundamentar bem o pitaco.
-    - Mostre domínio do assunto sem soar acadêmico: embasado sim, mas sempre numa linguagem que todo torcedor entenda, como numa mesa de bar.
-    - Quando a pergunta exigir um palpite (ex: previsões de resultado, probabilidades, tendências), não fuja da responsabilidade:
-      - Analise tecnicamente os dados, identifique padrões ou tendências, e fundamente a sua resposta com clareza.
-      - Deixe a visão analítica transparente, mesmo reconhecendo que o futebol tem imprevistos.
-      - Priorize apoiar o torcedor com uma visão estratégica, em vez de apenas alertá-lo sobre incertezas.
-    - Se não houver dados mínimos para dar uma resposta fundamentada, prefira avisar sobre a falta de base, mas evite dar palpites vazios.
-    - Evite relatórios genéricos: cada análise deve ser única, conectada aos dados reais dos jogos e à situação do momento.
+    – Bullet 1 (dado + contexto)  
+    – Bullet 2 (dado + contexto)
+    – Bullet 3 (noticia + contexto)   
+    – Bullet 4 (opcional)
+    – Bullet 5 (dado + contexto)
 
-    ⚡ Lembre-se: muitos torcedores usam essas análises para decisões importantes em apostas e palpites. Uma análise bem-feita pode fazer a diferença para eles.
+    [Pitaco final — até 40 palavras, linguagem de torcedor, embasada nos dados.]
 
   agent: brasileirao_senior_analyst
+
+
 
