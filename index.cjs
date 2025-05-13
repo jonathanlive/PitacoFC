@@ -116,6 +116,11 @@ async function processarFilaDeMensagens(sock, sender) {
         continue;
       }
 
+      if (intencao === 'ack') {
+        await sock.sendMessage(sender, { text: '✅ Show! Qualquer outra dúvida, é só chamar. ⚽' });
+        continue;
+      }
+
       if (intencao === 'futebol_geral') {
         try {
           const respostaIA = await axios.post(
