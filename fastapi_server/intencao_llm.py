@@ -10,7 +10,7 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 thread_manager = thread_manager.ThreadManager()
 
-def classificar_intencao(mensagem: str, historico: list = None) -> Literal["pergunta", "saudacao", "futebol_geral", "fora_de_contexto", "elogio", "ofensa", "noticia"]:
+def classificar_intencao(mensagem: str, historico: list = None) -> Literal["pergunta", "saudacao", "futebol_geral", "fora_de_contexto", "elogio", "ofensa", "noticia", "sobre_bot"]:
     historico = historico or []
     contexto = "\n".join(historico[-10:]) if historico else ""
 
@@ -28,6 +28,13 @@ Classifique com apenas UMA palavra, escolhendo entre:
 - "fora_de_contexto" → Mensagens que não falam de futebol (ex: "qual a capital da Alemanha?", "como investir dinheiro").
 - "elogio" → Quando o usuário elogia o assistente ("Você é bom!", "Resposta rápida!", "Mandou bem!").
 - "ofensa" → Quando o usuário desrespeita, xinga ou insulta ("burro", "inútil", "lixo").
+- "sobre_bot" → Mensagens pedindo ajuda, explicação de comandos, "o que você faz?".
+
+Exemplos sobre_bot:
+- "como funciona esse bot?"
+- "dá uma ajuda aí"
+- "quais comandos eu posso usar?"
+- "o que é o PitacoFC?"
 
 ⚠️ **Dica importante:**  
 Se a mensagem perguntar "Fulano vai jogar?", "Time X vai ter reforço?", "Quem tá lesionado?", classifique como "noticia", e não "pergunta".
@@ -48,7 +55,7 @@ Classifique agora:
             temperature=0,
         )
         resposta_final = resposta.choices[0].message.content.strip().lower()
-        return resposta_final if resposta_final in ["pergunta", "saudacao", "futebol_geral", "fora_de_contexto", "elogio", "ofensa", "noticia"] else "fora_de_contexto"
+        return resposta_final if resposta_final in ["pergunta", "saudacao", "futebol_geral", "fora_de_contexto", "elogio", "ofensa", "noticia", "sobre_bot" ] else "fora_de_contexto"
 
     except Exception as e:
         print(f"[⚠️ INTENÇÃO ERRO]: {e}")

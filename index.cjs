@@ -6,6 +6,7 @@ const express = require('express');
 const Redis = require('ioredis');
 const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
 const bodyParser = require('body-parser');
+const { proximaDica, saudacaoAleatoria } = require('./utils');
 const {
   default: makeWASocket,
   useMultiFileAuthState,
@@ -38,8 +39,6 @@ Manda sua dúvida ou seu pitaco que a gente desenrola! 🚀
 
 // 🎯 Mensagens padrão centralizadas
 const MENSAGENS = {
-  saudacao: '🎯 Fala, craque! Bora trocar aquele pitaco de qualidade sobre futebol? ⚽🔥',
-  geral: '🔎 Manda aí tua dúvida sobre o Brasileirão, os craques ou aquela resenha marota! 💬⚽',
   fora: '🚫 Aqui é só futebol, irmão! ⚽ Manda algo sobre o nosso mundão da bola que eu desenrolo pra você! 🎙️',
   aguardando: '⌛ Segura a emoção, parceiro! Tô revisando teu pitaco no VAR... já volto! 🧐⚽',
   analisando: '📊 Show! Tô no VAR agora... segura aí que vem insight de craque! ⚡⚽',
@@ -112,7 +111,8 @@ async function processarFilaDeMensagens(sock, sender) {
 
     try {
       if (intencao === 'saudacao') {
-        await sock.sendMessage(sender, { text: MENSAGENS.saudacao });
+        const texto = saudacaoAleatoria();   // sync, sem Redis
+        await sock.sendMessage(sender, { text: texto });
         continue;
       }
 
@@ -175,6 +175,12 @@ async function processarFilaDeMensagens(sock, sender) {
         }
       
         continue; // 🔥 ESSENCIAL parar aqui depois de responder
+      }
+
+      if (intencao === 'sobre_bot') {
+        const dica = await proximaDica(redis, sender);
+        await sock.sendMessage(sender, { text: dica });
+        continue; // volta pro loop
       }
 
       // Se for pergunta pesada, marca como processando
