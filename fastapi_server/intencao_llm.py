@@ -22,13 +22,13 @@ Analise a mensagem recebida, considerando o histórico recente (se existir).
 Classifique com apenas UMA palavra, escolhendo entre:
 
 - "saudacao" → Cumprimentos ou conversas informais tipo "e aí", "beleza", "salve", "tudo certo?".
-- "futebol_geral" → Dúvidas, comentários, brincadeiras ou curiosidades sobre futebol no geral (história, zoeiras, Copa, mitos, jogadores famosos).
+- "futebol_geral" → comentários, brincadeiras ou curiosidades sobre futebol no geral (história, zoeiras, Copa, mitos, jogadores famosos).
 - "pergunta" → Pedidos de análise técnica de desempenho no Brasileirão 2025 (ex: aproveitamento dos times, ranking de artilharia, saldo de gols, quem tem mais chances matemáticas).
 - "noticia" → Perguntas sobre atualizações recentes: jogadores lesionados, suspensos, se vai jogar, escalações, trocas de técnicos, rumores de transferência.
 - "fora_de_contexto" → Mensagens que não falam de futebol (ex: "qual a capital da Alemanha?", "como investir dinheiro").
 - "elogio" → Quando o usuário elogia o assistente ("Você é bom!", "Resposta rápida!", "Mandou bem!").
 - "ofensa" → Quando o usuário desrespeita, xinga ou insulta ("burro", "inútil", "lixo").
-- "sobre_bot" → Mensagens pedindo ajuda, explicação de comandos, "o que você faz?".
+- "sobre_bot" → Mensagens pedindo ajuda, que expresse duvidas ou explicação de comandos, "como funciona","o que você faz?","como assim?, "não entendi".
 
 Exemplos sobre_bot:
 - "como funciona esse bot?"
