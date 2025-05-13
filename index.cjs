@@ -6,7 +6,7 @@ const express = require('express');
 const Redis = require('ioredis');
 const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
 const bodyParser = require('body-parser');
-const { proximaDica, saudacaoAleatoria } = require('./utils');
+const { proximaDica, saudacaoAleatoria } = require('./utils.cjs');
 const {
   default: makeWASocket,
   useMultiFileAuthState,

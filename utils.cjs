@@ -1,6 +1,6 @@
 // utils.js
-const TIPS      = require('./tips_sobre_bot');
-const SAUDACOES = require('./greetings');
+const TIPS = require('./tips_sobre_bot.cjs');
+const SAUDACOES = require('./greetings.cjs');
 
 /**
  * Retorna uma dica aleatória, diferente da última enviada a esse usuário.
