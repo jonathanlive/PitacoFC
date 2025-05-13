@@ -8,6 +8,9 @@ WORKDIR /app
 # Copia os arquivos do bot
 COPY package*.json ./
 COPY index.cjs ./
+COPY greetings.cjs ./
+COPY utils.cjs ./
+COPY tips_sobre_bot.cjs ./
 #COPY auth_info_multi/ auth_info_multi/
 
 # Instala dependências
