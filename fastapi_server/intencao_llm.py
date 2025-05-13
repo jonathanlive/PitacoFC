@@ -39,13 +39,13 @@ Exemplos sobre_bot:
 ⚠️ **Dica importante:**  
 Se a mensagem perguntar "Fulano vai jogar?", "Time X vai ter reforço?", "Quem tá lesionado?", classifique como "noticia", e não "pergunta".
 
-Histórico recente da conversa:
+Analise o Histórico recente da conversa:
 {contexto}
 
-Mensagem nova:
+E compare com a Mensagem nova:
 "{mensagem}"
 
-Classifique agora:
+E Classifique a intenção do usuário:
 """
 
     try:
